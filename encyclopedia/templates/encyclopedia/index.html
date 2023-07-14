@@ -4,12 +4,19 @@
     Encyclopedia
 {% endblock %}
 
-{% block body %}
+{% block body %}   
+    {% if  no_page == True %}
+    <div class="alert alert-danger" role="alert">
+        Page with name "{{no_page_name}}" doesn't exists!
+    </div>
+    {% endif %}
+
     {% if  already_existed_title != None %}
         <div class="alert alert-danger" role="alert">
             Page with name "{{already_existed_title}}" already exists!
         </div>
     {% endif %}
+
     {% if  content == "no_content" %}
     <div class="alert alert-danger" role="alert">
         Page "{{title}}" doesn't have any content, it wasn't added!

@@ -17,9 +17,16 @@ def index(request):
     })
 
 def entry_page(request, title):
-    return render(request, "encyclopedia/title.html", {
-        "title": title.capitalize(),
-        "entry_text":  markdown_md_to_html(title)
+    if title.lower() in map(str.lower, util.list_entries()):
+        return render(request, "encyclopedia/title.html", {
+            "title": title.capitalize(),
+            "entry_text":  markdown_md_to_html(title)
+        })
+    else:
+        return render(request, "encyclopedia/index.html", {
+        "no_page": True,
+        "no_page_name": title,
+        "entries": util.list_entries()
     })
 
 def search(request):
