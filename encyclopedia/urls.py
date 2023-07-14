@@ -8,5 +8,6 @@ urlpatterns = [
     path("<str:title>", views.entry_page, name="title"),
     path("search/", views.search, name = "search"),
     path("createpage/", views.create_page, name = "newpage"),
-    path("addpage/", views.add_page, name="add")
+    path("addpage/", views.add_page, name="add"),
+    path("random/", views.random, name="random")
 ]

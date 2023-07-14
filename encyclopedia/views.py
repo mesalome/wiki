@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from . import util
 import markdown
+from random import choice
 
 def markdown_md_to_html(entry):
     markdowner = markdown.Markdown()
@@ -66,4 +67,12 @@ def add_page(request):
         
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
+    })
+
+def random(request):
+    entries = util.list_entries()
+    entry = choice(entries)
+    return render (request, "encyclopedia/title.html", {
+        "title": entry,
+        "entry_text":  markdown_md_to_html(entry)
     })
