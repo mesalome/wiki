@@ -28,8 +28,14 @@ def search(request):
                 "entry_text":  markdown_md_to_html(search_title)
             })
         else:
+            all_entries = util.list_entries()
+            desired_entries = []
+            for i in range(len(all_entries)):
+                if search_title in all_entries[i]:
+                    desired_entries.append(all_entries[i])
+
             return render(request, "encyclopedia/index.html", {
-        "entries": util.list_entries()
+        "entries": desired_entries
          })
     else:
         return render(request, "encyclopedia/index.html", {
@@ -38,4 +44,26 @@ def search(request):
     
 def create_page(request):
     return render(request, "encyclopedia/newpage.html")
-        # util.save_entry(title, content)
+
+def add_page(request):
+    if request.method == "POST":
+        added_title = request.POST['title'].capitalize()
+        if added_title.lower() in map(str.lower, util.list_entries()):
+            return render(request, "encyclopedia/index.html", {
+                "already_existed_title" : added_title,
+                "entries" : util.list_entries()
+            })
+        else:
+            added_content = request.POST["content"]
+            if len(added_content.strip()) == 0:
+                return render(request, "encyclopedia/index.html", {
+                    "title" : added_title,
+                    "content" : "no_content",
+                    "entries" : util.list_entries()
+                })
+            else:
+                util.save_entry(added_title, added_content)
+        
+    return render(request, "encyclopedia/index.html", {
+        "entries": util.list_entries()
+    })

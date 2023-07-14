@@ -3,14 +3,15 @@
 {% block title %}New Entry{% endblock %}
 
 {% block body %}
-<form>
+<form  action="{% url 'encyclopedia:add'%}" method="POST">
+    {% csrf_token %}
     <div class= "container">
         <div class="column">
             <div class="col">
     <label> Title: </label>
             </div>
             <div class="col">
-    <input class = "label" type="text" name = "label">
+    <input class = "title" type="text" name = "title">
             </div>
             <div class="col">
     Content: 

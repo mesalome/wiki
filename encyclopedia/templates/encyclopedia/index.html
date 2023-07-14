@@ -5,6 +5,17 @@
 {% endblock %}
 
 {% block body %}
+    {% if  already_existed_title != None %}
+        <div class="alert alert-danger" role="alert">
+            Page with name "{{already_existed_title}}" already exists!
+        </div>
+    {% endif %}
+    {% if  content == "no_content" %}
+    <div class="alert alert-danger" role="alert">
+        Page "{{title}}" doesn't have any content, it wasn't added!
+    </div>
+    {% endif %}
+
     <h1>All Pages</h1>
 
     <ul>
@@ -12,5 +23,5 @@
             <li><a href="{% url 'encyclopedia:title' title=entry%}">{{ entry }}</a></li>
         {% endfor %}
     </ul>
-
+    
 {% endblock %}
