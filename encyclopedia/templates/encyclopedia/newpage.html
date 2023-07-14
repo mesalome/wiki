@@ -1,0 +1,27 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}New Entry{% endblock %}
+
+{% block body %}
+<form>
+    <div class= "container">
+        <div class="column">
+            <div class="col">
+    <label> Title: </label>
+            </div>
+            <div class="col">
+    <input class = "label" type="text" name = "label">
+            </div>
+            <div class="col">
+    Content: 
+            </div>
+            <div class="col">
+                <textarea  name = "content" placeholder="Markdown content"> </textarea> 
+            </div>
+            <div class="col">
+    <input class="btn btn-outline-primary btn-lg" type="submit" name = "submit">
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
