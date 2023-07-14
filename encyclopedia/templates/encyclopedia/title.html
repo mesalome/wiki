@@ -6,4 +6,10 @@
 
 {% block body %}
     {{entry_text|safe}}
+    <form  action="{% url 'encyclopedia:edit'%}" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-outline-secondary" name="Edit Content" value="Edit Content">
+        <input type="hidden" class="btn btn-outline-secondary" name="soon_to_be_eddited_page" value="{{title}}">
+    </form>
+    
 {% endblock %}

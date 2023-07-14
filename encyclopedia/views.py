@@ -1,4 +1,6 @@
+from turtle import title
 from django.shortcuts import render
+from django.core.files.storage import default_storage
 
 from . import util
 import markdown
@@ -76,3 +78,32 @@ def random(request):
         "title": entry,
         "entry_text":  markdown_md_to_html(entry)
     })
+
+def edit(request):
+    if request.method == "POST":
+        edit_title = request.POST['soon_to_be_eddited_page']
+        return render(request, "encyclopedia/edit.html", 
+                    {
+                        "title": edit_title,
+                        "content": util.get_entry(edit_title)
+                    })
+    return render(request, "encyclopedia/index.html", 
+                    {
+                        "entries": util.list_entries()
+                    })
+
+def save(request):
+    if request.method == "POST":
+        title = request.POST['title_of_edited_page']
+        new_content = request.POST['content_edit']
+        try:
+            with default_storage.open(f"entries/{title}.md", "w") as f:
+                f.write(new_content)
+        except Exception as e:
+            print(f"An error occurred while writing to file: {e}")
+        return render(request, "encyclopedia/title.html",
+                      {
+                          "title": title,
+                          "entry_text": markdown_md_to_html(title)
+                      }
+        )
